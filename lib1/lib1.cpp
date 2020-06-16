@@ -1,10 +1,11 @@
 #include <iostream>
 #include <cassert>
 
-#include "kernels.h"
+//#include "kernels.h"
 
 extern "C" {
     void entryPoint() {
-        doEntryPoint();
+        std::cout << "hello from lib1\n";
+  //      doEntryPoint();
     }
 }
