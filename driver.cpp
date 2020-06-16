@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
     std::string symbName = "entryPoint";
 
     // open up libs and get a hold of the entry point symbols
+    std::cout << "opening shared libs\n";
     void *handle1 = dlopen(libName1.c_str(), RTLD_LAZY | RTLD_GLOBAL);
     void *handle2 = dlopen(libName2.c_str(), RTLD_LAZY | RTLD_GLOBAL);
     using func = void(*)();
@@ -25,7 +26,9 @@ int main(int argc, char** argv) {
     func entryPoint2 = (func)dlsym(handle2, symbName.c_str());
 
     // run 1 and 2
+    std::cout << "calling entry point 1\n";
     entryPoint1();
+    std::cout << "calling entry point 2\n";
     entryPoint2();
 
     return 0;
