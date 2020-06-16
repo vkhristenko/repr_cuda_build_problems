@@ -23,5 +23,4 @@ driver: /data/patatrack/vkhriste/repr_cuda_build_problems/lib2/kernels.cu:22: li
 ```
 
 ## Requirements
- - `cuda` in `/usr/local/cuda`
-
+ - `cuda` in `/usr/local/cuda` and `LD_LIBRARY_PATH` updated accordingly
