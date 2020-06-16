@@ -23,16 +23,6 @@ lib1.$(LIB_EXTENSION): $(PROJECT_DIR)/lib1/lib1.o
 lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o
 	g++ $(CXXFLAGS) $^ $(LDFLAGS) -shared -o $@
 
-#libplugins.$(LIB_EXTENSION): $(PROJECT_DIR)/TestPlugins/src/Plugin1.o $(PROJECT_DIR)/PluginManager/src/Manager.o
-#	g++ $(CXXFLAGS) $^ $(LDFLAGS) -shared -o $@
-
-#  3 all: $(objects)
-#    4     nvcc -g -G -arch=sm_35 -dlink ${objects} -o device_stuff.o 
-#	  5     g++  device_stuff.o ${objects} -L/usr/local/cuda/lib64/ -lcudart -o app
-#	    6 
-#		  7 %.o: %.cu
-#		    8     nvcc -x cu -arch=sm_35 -I. -dc $< -o $@
-
 %.o: %.cpp
 	g++ $(CXXFLAGS) -c $< -o $@
 
