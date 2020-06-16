@@ -27,6 +27,7 @@ lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o $(PROJECT_DIR)/lib2/kernels_de
 $(PROJECT_DIR)/lib1/kernels_device.o: $(PROJECT_DIR)/lib1/kernels.o
 	nvcc -arch=sm_61 -dlink --compiler-options '-std=c++14 -fPIC' -std=c++14 $^ -o $@
 
+### *** MOST IMPORTANT PART: lib2 dlink should include lib1 device stuff (before dlink) ***
 $(PROJECT_DIR)/lib2/kernels_device.o: $(PROJECT_DIR)/lib2/kernels.o $(PROJECT_DIR)/lib1/kernels.o
 	nvcc -arch=sm_61 -dlink --compiler-options '-std=c++14 -fPIC' -std=c++14 $^ -o $@
 
