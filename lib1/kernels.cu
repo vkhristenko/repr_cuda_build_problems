@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cassert>
 
+#include "kernels.h"
+
 __device__
 void some_dev_func() {}
 
@@ -22,10 +24,4 @@ void doEntryPoint() {
     kernel_test<<<1,1>>>();
     check_error(cudaGetLastError());
     cudaDeviceSynchronize();
-}
-
-extern "C" {
-    void entryPoint() {
-        doEntryPoint();
-    }
 }
