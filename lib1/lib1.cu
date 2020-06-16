@@ -1,20 +1,31 @@
 #include <iostream>
+#include <cassert>
+
+__device__
+void some_dev_func() {}
 
 __global__
-void kernelt_test() { printf("hello from lib1 kernel\n"); }
+void kernel_test() { 
+    printf("hello from lib1 kernel\n"); 
+    some_dev_func();
+}
+
+void doEntryPoint() { 
+    std::cout << "hello from lib1\n"; 
+    auto check_error = [](auto code) {
+        if (code != cudaSuccess) {
+            std::cout << cudaGetErrorString(code) << std::endl;
+            assert(false);
+        }
+    };
+
+    kernel_test<<<1,1>>>();
+    check_error(cudaGetLastError());
+    cudaDeviceSynchronize();
+}
 
 extern "C" {
-    void entryPoint() { 
-        auto check_error = [](auto code) {
-            if (code != cudaSuccess) {
-                std::cout << cudaGetErrorString(code) << std::endl;
-                assert(false);
-            }
-        };
-
-        std::cout << "hello from lib1\n"; 
-        kernel_test<<<1,1>>>();
-        check_error(cudaGetLastError());
-        cudaDeviceSynchronize();
+    void entryPoint() {
+        doEntryPoint();
     }
 }
