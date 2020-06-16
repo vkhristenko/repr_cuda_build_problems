@@ -16,17 +16,19 @@ driver: driver.o
 	g++ $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 
 lib1.$(LIB_EXTENSION): $(PROJECT_DIR)/lib1/lib1.o $(PROJECT_DIR)/lib1/kernels_device.o $(PROJECT_DIR)/lib1/kernels.o
-	g++ $(CXXFLAGS) $^ ${LDFLAGS} -shared -o $@
-#	g++ $(CXXFLAGS) $< ${LDFLAGS} -L/usr/local/cuda/lib64 -lcudart -shared -o $@
+	g++ $(CXXFLAGS) $^ ${LDFLAGS} -shared -L/usr/local/cuda/lib64 -lcudart -o $@ 
 
-lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o
-	g++ $(CXXFLAGS) $^ $(LDFLAGS) -shared -o $@
+lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o $(PROJECT_DIR)/lib2/kernels_device.o $(PROJECT_DIR)/lib2/kernels.o
+	g++ $(CXXFLAGS) $^ $(LDFLAGS) -shared -L/usr/local/cuda/lib64 -lcudart -o $@
 
 %.o: %.cpp
 	g++ $(CXXFLAGS) -c $< -o $@
 
-%_device.o: %.o
-	nvcc -arch=sm_61 -dlink --compiler-options '-std=c++14 -fPIC' -lcudaevrt -std=c++14 $^ -o $@
+$(PROJECT_DIR)/lib1/kernels_device.o: $(PROJECT_DIR)/lib1/kernels.o
+	nvcc -arch=sm_61 -dlink --compiler-options '-std=c++14 -fPIC' -std=c++14 $^ -o $@
+
+$(PROJECT_DIR)/lib2/kernels_device.o: $(PROJECT_DIR)/lib2/kernels.o $(PROJECT_DIR)/lib1/kernels.o
+	nvcc -arch=sm_61 -dlink --compiler-options '-std=c++14 -fPIC' -std=c++14 $^ -o $@
 
 %.o: %.cu
 	nvcc -dc -std=c++14 -arch=sm_61 --compiler-options '-std=c++14 -fPIC' $< -o $@

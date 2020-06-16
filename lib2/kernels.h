@@ -1,7 +1,7 @@
 #ifndef kernels_h
 #define kernels_h
 
-namespace lib1 {
+namespace lib2 {
 
 void doEntryPoint();
 
