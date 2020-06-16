@@ -28,5 +28,8 @@ lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o
 %.o: %.cc
 	g++ $(CXXFLAGS) -c $< -o $@
 
+%.o: %.cu
+	nvcc -x cu -arch=sm_61 -c $< -o $@
+
 clean:
 	rm driver *.o *.$(LIB_EXTENSION)
