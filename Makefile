@@ -18,7 +18,7 @@ driver: driver.o
 lib1.$(LIB_EXTENSION): $(PROJECT_DIR)/lib1/lib1.o $(PROJECT_DIR)/lib1/kernels_device.o $(PROJECT_DIR)/lib1/kernels.o
 	g++ $(CXXFLAGS) $^ ${LDFLAGS} -shared -L/usr/local/cuda/lib64 -lcudart -o $@ 
 
-lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o $(PROJECT_DIR)/lib2/kernels_device.o $(PROJECT_DIR)/lib2/kernels.o lib1.$(LIB_EXTENSION)
+lib2.$(LIB_EXTENSION): $(PROJECT_DIR)/lib2/lib2.o $(PROJECT_DIR)/lib2/kernels_device.o $(PROJECT_DIR)/lib2/kernels.o
 	g++ $(CXXFLAGS) $^ $(LDFLAGS) -shared -L/usr/local/cuda/lib64 -lcudart -o $@
 
 %.o: %.cpp
