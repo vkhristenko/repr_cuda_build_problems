@@ -4,7 +4,7 @@
 ```
 git clone ...
 cd repr_cuda_build_problems && make
-./driver
+./driver 3
 ```
 
 the above sequence should produce:
